@@ -14,7 +14,7 @@ pip install aioconsole #for tests
 
 # Architecture
 
-"MyServer" composes "MyOpcuaAddressSpace" and "MyFSM".
+`MyServer` composes `MyOpcuaAddressSpace` and `MyFSM`.
 
 The FSM contains an instance of an IState object. The IState object contains a back reference to the FSM, and overridable methods for the state's transition functions. Concrete states should override these methods to set the current state of the FSM.
 When a new state is entered, the transition will be logged, and 3 abstract methods will be called, `self.on_enter`, `self.start_state_behaviour`, and `old_state.stop_state_behaviour()`. These can be used to read/write to the opcua address space, and to create and stop asyncio tasks that run loops and write to the opcua address space (e.g incrementing the position value while in the jog state).
