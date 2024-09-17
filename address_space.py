@@ -1,4 +1,3 @@
-from tkinter import N
 from asyncua import Server, Node, ua  #type: ignore
 from asyncua.common.xmlimporter import XmlImporter #type: ignore
 from typing import Awaitable, Callable, List, Dict, Optional
