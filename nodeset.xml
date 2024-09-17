@@ -1,0 +1,70 @@
+<ns0:UANodeSet xmlns:ns0="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd"
+  xmlns:ns1="http://opcfoundation.org/UA/2008/02/Types.xsd">
+
+  <!-- register a custom namespace -->
+  <ns0:NamespaceUris>
+    <ns0:Uri>http://www.oldi.com/OPCUA/MyNamespace</ns0:Uri>
+  </ns0:NamespaceUris>
+
+  <!-- A folder node (object) that contains the other nodes. It's parent is i=85, i.e, the Objects node  -->
+  <ns0:UAObject NodeId="ns=3;s=MY_NODES" BrowseName="3:MY_NODES" ParentNodeId="i=85"> <!-- NodeID must be globbaly unique, BrowseName must be unique amongst sibblings -->
+    <ns0:DisplayName>MY_NODES</ns0:DisplayName>
+    <ns0:References>
+      <ns0:Reference ReferenceType="HasComponent" IsForward="false">i=85</ns0:Reference>
+      <ns0:Reference ReferenceType="HasTypeDefinition">i=61</ns0:Reference> <!-- FolderType -->
+      <ns0:Reference ReferenceType="Organizes">ns=3;s=POSITION</ns0:Reference> <!-- It composes this node -->
+      <ns0:Reference ReferenceType="Organizes">ns=3;s=VOLTAGE</ns0:Reference> <!-- It composes this node -->
+      <ns0:Reference ReferenceType="Organizes">ns=3;s=COMMAND</ns0:Reference> <!-- It composes this node -->
+      <ns0:Reference ReferenceType="Organizes">ns=3;s=MODE</ns0:Reference> <!-- It composes this node -->
+    </ns0:References>
+  </ns0:UAObject>
+
+  <!-- The position node -->
+  <ns0:UAVariable NodeId="ns=3;s=POSITION" BrowseName="3:POSITION" ParentNodeId="ns=3;s=MY_NODES" DataType="UInt32">
+    <ns0:DisplayName>POSITION</ns0:DisplayName>
+    <ns0:References>
+      <ns0:Reference ReferenceType="HasTypeDefinition">i=62</ns0:Reference> 
+      <ns0:Reference ReferenceType="Organizes" IsForward="false">ns=3;s=MY_NODES</ns0:Reference>
+    </ns0:References>
+    <ns0:Value>
+      <ns1:UInt32>42</ns1:UInt32>
+    </ns0:Value>
+  </ns0:UAVariable>
+
+  <!-- The VOLTAGE node -->
+  <ns0:UAVariable NodeId="ns=3;s=VOLTAGE" BrowseName="3:VOLTAGE" ParentNodeId="ns=3;s=MY_NODES" DataType="UInt32">
+    <ns0:DisplayName>VOLTAGE</ns0:DisplayName>
+    <ns0:References>
+      <ns0:Reference ReferenceType="HasTypeDefinition">i=62</ns0:Reference> 
+      <ns0:Reference ReferenceType="Organizes" IsForward="false">ns=3;s=MY_NODES</ns0:Reference>
+    </ns0:References>
+    <ns0:Value>
+      <ns1:UInt32>240</ns1:UInt32>
+    </ns0:Value>
+  </ns0:UAVariable>
+
+  <!-- The COMMAND node (writable) -->
+    <ns0:UAVariable NodeId="ns=3;s=COMMAND" BrowseName="3:COMMAND" ParentNodeId="ns=3;s=MY_NODES" DataType="UInt32" AccessLevel="3" UserAccessLevel="3">
+        <ns0:DisplayName>COMMAND</ns0:DisplayName>
+        <ns0:References>
+          <ns0:Reference ReferenceType="HasTypeDefinition">i=62</ns0:Reference> 
+          <ns0:Reference ReferenceType="Organizes" IsForward="false">ns=3;s=MY_NODES</ns0:Reference>
+        </ns0:References>
+        <ns0:Value>
+          <ns1:UInt32>0</ns1:UInt32>
+        </ns0:Value>
+    </ns0:UAVariable>
+
+  <!-- The MODE node (becomes value of COMMAND if accepted) -->
+    <ns0:UAVariable NodeId="ns=3;s=MODE" BrowseName="3:MODE" ParentNodeId="ns=3;s=MY_NODES" DataType="UInt32">
+        <ns0:DisplayName>MODE</ns0:DisplayName>
+        <ns0:References>
+          <ns0:Reference ReferenceType="HasTypeDefinition">i=62</ns0:Reference> 
+          <ns0:Reference ReferenceType="Organizes" IsForward="false">ns=3;s=MY_NODES</ns0:Reference>
+        </ns0:References>
+        <ns0:Value>
+          <ns1:UInt32>0</ns1:UInt32>
+        </ns0:Value>
+    </ns0:UAVariable>
+
+</ns0:UANodeSet>
