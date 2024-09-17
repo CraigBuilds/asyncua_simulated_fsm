@@ -6,7 +6,7 @@ class IState:
 
     def __init__(self, fsm: 'MyFSM', old_state: Optional['IState']) -> None:
         """
-        This state object contains a back reference to it's parent FSM so it can transition the state.
+        This state object contains a back reference to the FSM so it can transition the state.
         It also contains a reference to the previous state so it can stop the task created in start_state_behaviour.
         The FSM object contains a reference to the address space so it can read and write values to the nodes.
         """
