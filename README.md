@@ -21,7 +21,7 @@ When a new state is entered, the transition will be logged, and 3 abstract metho
 
 The address space creates the opcua nodes on initialisation, and has properties (getters and setters) for the node values.
 It uses an XML UANodeSet to configure the address space. 
-It also has a method to register a callback that will be triggered when the COMMAND node is written to. This is used by "MyServer" to transition the FSM.
+It also has a method to register a callback that will be triggered when the COMMAND node is written to.
 
 For example:
 
@@ -30,3 +30,5 @@ address_space.register_callback(NODE_COMMAND_VALUES.DISABLE, lambda: print("DISA
 ```
 
 This will print "DISABLED" when the COMMAND node is written to with the value of DISABLE.
+
+`MyServer` registers callbacks that attempt to transition the FSM when the COMMAND node is written to. 
