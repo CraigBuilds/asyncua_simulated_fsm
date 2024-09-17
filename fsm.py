@@ -176,17 +176,21 @@ if __name__ == "__main__":
         fsm.state.jog()
         assert isinstance(fsm.state, JogState)
 
+        start_pos = await address_space.position
         print("Waiting 3 seconds...")
         await asyncio.sleep(3)
+        new_pos = await address_space.position
+        assert new_pos > start_pos
 
         #abort it and check it transitions to the AbortState
         fsm.state.abort()
         assert isinstance(fsm.state, AbortState)
-        pos = await address_space.position
+        start_pos = await address_space.position
 
         print("Waiting 3 seconds...")
         await asyncio.sleep(3)
         #check it has stopped jogging
-        assert pos == await address_space.position
+        new_pos == await address_space.position
+        assert new_pos == start_pos
 
     asyncio.run(test())
