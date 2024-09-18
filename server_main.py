@@ -1,7 +1,9 @@
 from asyncua import Server  #type: ignore
-from simulator.address_space import *
+from address_space import MyOpcuaAddressSpace, NODE_COMMAND_VALUES
 from fsm import MyFSM
 import asyncio
+from pathlib import Path
+from typing import Optional
 
 class MyServer(Server):
     """
@@ -10,16 +12,16 @@ class MyServer(Server):
     The FSM has a method to transition the state of the FSM.
     This class uses the address space to register callbacks that will transition the FSM.
     """
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.__address_space = MyOpcuaAddressSpace()
         self.__fsm: Optional[MyFSM] = None #Can only create the FSM after the address space has been initialized
 
-    async def async_init(self, xml_file_path: str):
+    async def async_init(self, xml_file_path: Path):
         """
         Initialize the address space, and register the callbacks that will transition the FSM.
         """
-        await self.__address_space.async_init(self, xml_file_path)
+        await self.__address_space.async_init(self, str(xml_file_path))
         await self.start() #Start the server (base class method)
         self.__fsm = MyFSM(self.__address_space) #FSM has access to the address space to read and write values to the nodes
 
@@ -48,7 +50,7 @@ async def main():
     server = MyServer()
     await server.init()
     server.set_endpoint("opc.tcp://localhost:4840/freeopcua/server/")
-    await server.async_init("D:/sandbox/hlcs_tutorial/simulator/nodeset.xml")
+    await server.async_init(Path(__file__).with_name("nodeset.xml"))
     while True:
         await asyncio.sleep(0)
 
